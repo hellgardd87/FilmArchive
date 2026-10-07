@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Редактирование фильма'">
+  <head th:replace="~{fragments/header :: head(${pageTitle})}">
+  </head>
+  <body>
+    <header th:replace="~{fragments/header :: navigation}">
+    </header>
+    <main class="container">
+      <div th:replace="~{fragments/messages :: messages}">
+      </div>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">Карточка фильма</p>
+          <h1>Редактирование фильма</h1>
+          <p class="muted">Измените данные и сохраните карточку.</p>
+        </div>
+        <a class="button secondary" th:href="@{/edit}">Отмена</a>
+      </div>
+      <section class="panel form-panel">
+        <form method="post" th:action="@{/update_film/{id}(id=${filmId})}" th:object="${filmForm}">
+          <div th:replace="~{fragments/film-fields :: fields}">
+          </div>
+          <div class="actions">
+            <button type="submit">Сохранить</button>
+            <a class="button secondary" th:href="@{/edit}">Отмена</a>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer th:replace="~{fragments/footer :: footer}">
+    </footer>
+  </body>
+</html>

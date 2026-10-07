@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="messages" th:if="${message}" class="notice" th:classappend="${messageType ?: 'warning'}" role="status" th:text="${message}">
+    </div>
+  </body>
+</html>

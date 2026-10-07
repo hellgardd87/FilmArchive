@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Поиск'">
+  <head th:replace="~{fragments/header :: head(${pageTitle})}">
+  </head>
+  <body>
+    <header th:replace="~{fragments/header :: navigation}">
+    </header>
+    <main class="container">
+      <div th:replace="~{fragments/messages :: messages}">
+      </div>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">Откройте коллекцию</p>
+          <h1>Поиск фильмов</h1>
+          <p class="muted">Выберите жанр. Список стран подстроится под фильмы в каталоге.</p>
+        </div>
+      </div>
+      <section class="panel">
+        <form method="get" th:action="@{/search}" id="search-form" th:attr="data-countries-url=@{/get_countries}">
+          <div class="search-fields">
+            <label>Жанр<select name="genre" id="search-genre" required>
+                <option value="">Выберите жанр</option>
+                <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.title}" th:selected="${g.id == selectedGenre}">
+                </option>
+              </select>
+            </label>
+            <label>Страна<select name="country" id="search-country" th:disabled="${selectedGenre == null}">
+                <option value="">Все страны жанра</option>
+                <option th:each="c : ${countryOptions}" th:value="${c.id}" th:text="${c.title}" th:selected="${c.id == selectedCountry}">
+                </option>
+              </select>
+            </label>
+            <button type="submit" id="search-submit">Найти</button>
+            <a class="button secondary" th:href="@{/search}">Сбросить</a>
+          </div>
+          <p class="muted" id="search-status" role="status" aria-live="polite">
+          </p>
+          <noscript>
+            <p class="muted">Для загрузки стран выберите жанр и нажмите «Найти».</p>
+          </noscript>
+        </form>
+      </section>
+      <section class="panel" th:if="${searched}">
+        <div class="section-heading">
+          <h2>Результаты поиска</h2>
+          <span class="badge" th:text="${#lists.size(results)} + ' найдено'">
+          </span>
+        </div>
+        <div class="table-scroll" th:unless="${#lists.isEmpty(results)}">
+          <table>
+            <thead>
+              <tr>
+                <th>Название</th>
+                <th>Жанр</th>
+                <th>Страна</th>
+                <th>Возраст</th>
+                <th>Качество</th>
+                <th>Длительность</th>
+                <th>Дата выхода</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="f : ${results}">
+                <td>
+                  <strong th:text="${f.title}">
+                  </strong>
+                </td>
+                <td th:text="${f.genre.title}">
+                </td>
+                <td th:text="${f.country.title}">
+                </td>
+                <td th:text="${f.ageLimit.category}">
+                </td>
+                <td th:text="${f.shootingQuality.type}">
+                </td>
+                <td th:text="${f.duration} + ' мин'">
+                </td>
+                <td th:text="${#temporals.format(f.releaseDate,'dd.MM.yyyy')}">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="empty-state" th:if="${#lists.isEmpty(results)}">Фильмы не найдены. Попробуйте выбрать другой жанр или все страны.</p>
+      </section>
+    </main>
+    <footer th:replace="~{fragments/footer :: footer}">
+    </footer>
+  </body>
+</html>

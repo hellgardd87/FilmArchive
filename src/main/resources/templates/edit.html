@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Управление'">
+  <head th:replace="~{fragments/header :: head(${pageTitle})}">
+  </head>
+  <body>
+    <header th:replace="~{fragments/header :: navigation}">
+    </header>
+    <main class="container">
+      <div th:replace="~{fragments/messages :: messages}">
+      </div>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">Ваша коллекция</p>
+          <h1>Управление данными</h1>
+          <p class="muted">Добавляйте фильмы, редактируйте карточки и пополняйте справочники.</p>
+        </div>
+        <a class="button" href="#add-film">Добавить фильм</a>
+      </div>
+      <nav class="section-nav" aria-label="Разделы управления">
+        <a href="#films">Фильмы</a>
+        <a href="#add-film">Новый фильм</a>
+        <a href="#genres">Жанры</a>
+        <a href="#countries">Страны</a>
+        <a href="#ages">Возраст</a>
+        <a href="#qualities">Качество</a>
+        <a href="#people">Актёры</a>
+      </nav>
+      <section class="panel" id="films">
+        <div class="section-heading">
+          <h2>Фильмы</h2>
+          <span class="badge" th:text="${#lists.size(films)} + ' в коллекции'">
+          </span>
+        </div>
+        <div class="table-scroll" th:unless="${#lists.isEmpty(films)}">
+          <table>
+            <thead>
+              <tr>
+                <th>Название</th>
+                <th>Жанр / страна</th>
+                <th>Возраст / качество</th>
+                <th>Бюджет, USD</th>
+                <th>Сборы, USD</th>
+                <th>Актёры</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="f : ${films}">
+                <td>
+                  <strong th:text="${f.title}">
+                  </strong>
+                  <small th:text="${#temporals.format(f.releaseDate, 'dd.MM.yyyy')}">
+                  </small>
+                  <small th:text="${f.duration} + ' мин'">
+                  </small>
+                  <details th:if="${!#strings.isEmpty(f.description)}">
+                    <summary>Описание</summary>
+                    <p th:text="${f.description}">
+                    </p>
+                  </details>
+                </td>
+                <td>
+                  <span th:text="${f.genre.title}">
+                  </span>
+                  <small th:text="${f.country.title}">
+                  </small>
+                </td>
+                <td>
+                  <span class="badge" th:text="${f.ageLimit.category}">
+                  </span>
+                  <small th:text="${f.shootingQuality.type}">
+                  </small>
+                </td>
+                <td class="numeric" th:text="${#numbers.formatDecimal(f.budget,1,'WHITESPACE',2,'COMMA')}">
+                </td>
+                <td class="numeric" th:text="${#numbers.formatDecimal(f.totalBoxOffice,1,'WHITESPACE',2,'COMMA')}">
+                </td>
+                <td class="actors-cell" th:text="${f.actorNames}">
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <a class="button secondary small" th:href="@{/edit_film/{id}(id=${f.id})}">Изменить</a>
+                    <form method="post" th:action="@{/delete_film/{id}(id=${f.id})}" data-confirm="Удалить фильм? Актёры останутся в каталоге.">
+                      <button class="danger small" type="submit">Удалить</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="empty-state" th:if="${#lists.isEmpty(films)}">В каталоге пока нет фильмов. Добавьте первый фильм с помощью формы ниже.</p>
+      </section>
+      <section class="panel form-panel" id="add-film">
+        <p class="eyebrow">Новая история</p>
+        <h2>Добавить фильм</h2>
+        <p class="muted">Поля со звёздочкой обязательны. Все денежные суммы указаны в долларах США.</p>
+        <form method="post" th:action="@{/add_film}" th:object="${filmForm}">
+          <div th:replace="~{fragments/film-fields :: fields}">
+          </div>
+          <div class="actions">
+            <button type="submit">Добавить</button>
+            <a class="button secondary" th:href="@{/edit}">Отмена</a>
+          </div>
+        </form>
+      </section>
+      <div class="reference-grid">
+        <section id="genres" class="panel reference-panel">
+          <h2>Жанры</h2>
+          <form method="post" th:action="@{/add_genre}" th:object="${genreForm}">
+            <ul class="validation-summary" th:if="${#fields.hasErrors('*')}" role="alert">
+              <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+              </li>
+            </ul>
+            <div class="compact-form">
+              <label>Название<input th:field="*{title}" maxlength="120" required>
+              </label>
+              <label>Код<input th:field="*{code}" maxlength="120" required>
+              </label>
+              <button type="submit">Добавить</button>
+            </div>
+          </form>
+          <ul class="reference-list">
+            <li th:each="item : ${genres}">
+              <span>
+                <strong th:text="${item.title}">
+                </strong>
+                <small th:text="${item.code}">
+                </small>
+              </span>
+            </li>
+          </ul>
+          <p class="muted" th:if="${#lists.isEmpty(genres)}">Пока нет записей.</p>
+        </section>
+        <section id="countries" class="panel reference-panel">
+          <h2>Страны</h2>
+          <form method="post" th:action="@{/add_country}" th:object="${countryForm}">
+            <ul class="validation-summary" th:if="${#fields.hasErrors('*')}" role="alert">
+              <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+              </li>
+            </ul>
+            <div class="compact-form">
+              <label>Название<input th:field="*{title}" maxlength="120" required>
+              </label>
+              <label>Код<input th:field="*{code}" maxlength="120" required>
+              </label>
+              <button type="submit">Добавить</button>
+            </div>
+          </form>
+          <ul class="reference-list">
+            <li th:each="item : ${countries}">
+              <span>
+                <strong th:text="${item.title}">
+                </strong>
+                <small th:text="${item.code}">
+                </small>
+              </span>
+            </li>
+          </ul>
+          <p class="muted" th:if="${#lists.isEmpty(countries)}">Пока нет записей.</p>
+        </section>
+        <section id="ages" class="panel reference-panel">
+          <h2>Возрастные ограничения</h2>
+          <form method="post" th:action="@{/add_age_limit}" th:object="${ageForm}">
+            <ul class="validation-summary" th:if="${#fields.hasErrors('*')}" role="alert">
+              <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+              </li>
+            </ul>
+            <div class="compact-form">
+              <label>Категория<input th:field="*{category}" maxlength="120" required>
+              </label>
+              <label>Код<input th:field="*{code}" maxlength="120" required>
+              </label>
+              <button type="submit">Добавить</button>
+            </div>
+          </form>
+          <ul class="reference-list">
+            <li th:each="item : ${ageLimits}">
+              <span>
+                <strong th:text="${item.category}">
+                </strong>
+                <small th:text="${item.code}">
+                </small>
+              </span>
+            </li>
+          </ul>
+          <p class="muted" th:if="${#lists.isEmpty(ageLimits)}">Пока нет записей.</p>
+        </section>
+        <section id="qualities" class="panel reference-panel">
+          <h2>Качество съёмки</h2>
+          <form method="post" th:action="@{/add_quality}" th:object="${qualityForm}">
+            <ul class="validation-summary" th:if="${#fields.hasErrors('*')}" role="alert">
+              <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+              </li>
+            </ul>
+            <div class="compact-form">
+              <label>Название<input th:field="*{type}" maxlength="120" required>
+              </label>
+              <button type="submit">Добавить</button>
+            </div>
+          </form>
+          <ul class="reference-list">
+            <li th:each="item : ${qualities}">
+              <span>
+                <strong th:text="${item.type}">
+                </strong>
+              </span>
+            </li>
+          </ul>
+          <p class="muted" th:if="${#lists.isEmpty(qualities)}">Пока нет записей.</p>
+        </section>
+        <section id="people" class="panel reference-panel">
+          <h2>Актёры</h2>
+          <form method="post" th:action="@{/add_person}" th:object="${personForm}">
+            <ul class="validation-summary" th:if="${#fields.hasErrors('*')}" role="alert">
+              <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+              </li>
+            </ul>
+            <div class="compact-form">
+              <label>ФИО<input th:field="*{fullName}" maxlength="120" required>
+              </label>
+              <button type="submit">Добавить</button>
+            </div>
+          </form>
+          <ul class="reference-list">
+            <li th:each="item : ${people}">
+              <span>
+                <strong th:text="${item.fullName}">
+                </strong>
+              </span>
+              <form method="post" th:action="@{/delete_person/{id}(id=${item.id})}" data-confirm="Удалить актёра и его связи с фильмами? Фильмы сохранятся.">
+                <button class="danger small" type="submit">Удалить</button>
+              </form>
+            </li>
+          </ul>
+          <p class="muted" th:if="${#lists.isEmpty(people)}">Пока нет записей.</p>
+        </section>
+      </div>
+    </main>
+    <footer th:replace="~{fragments/footer :: footer}">
+    </footer>
+  </body>
+</html>

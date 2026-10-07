@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Главная'">
+  <head th:replace="~{fragments/header :: head(${pageTitle})}">
+  </head>
+  <body>
+    <header th:replace="~{fragments/header :: navigation}">
+    </header>
+    <main class="container">
+      <div th:replace="~{fragments/messages :: messages}">
+      </div>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Личная кинотека</p>
+          <h1>Большие истории.<br>Удобный каталог.</h1>
+          <p class="lead">Собирайте фильмы, находите любимые жанры и знакомьтесь с актёрами. Вся ваша коллекция — в одном месте.</p>
+          <div class="actions">
+            <a class="button" th:href="@{/edit}">Управлять коллекцией <span aria-hidden="true">→</span>
+            </a>
+            <a class="button secondary" th:href="@{/search}">Найти фильм</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="film-card">
+            <span>КИНО</span>
+            <strong>Каждая история<br>заслуживает места.</strong>
+            <div class="film-stripe">
+            </div>
+            <span>ВАША КОЛЛЕКЦИЯ / 01</span>
+          </div>
+        </div>
+      </section>
+      <section class="stats-grid">
+        <article class="stat">
+          <span>Фильмов в каталоге</span>
+          <strong th:text="${stats.films}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Актёров</span>
+          <strong th:text="${stats.actors}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Жанров</span>
+          <strong th:text="${stats.genres}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Стран</span>
+          <strong th:text="${stats.countries}">0</strong>
+        </article>
+      </section>
+      <section class="feature-grid">
+        <a class="panel feature" th:href="@{/search}">
+          <span class="eyebrow">01 / Поиск</span>
+          <h2>Найдите свою историю</h2>
+          <p>Выберите жанр и страну, чтобы открыть фильмы вашей коллекции.</p>
+        </a>
+        <a class="panel feature" th:href="@{/aggregate}">
+          <span class="eyebrow">02 / Статистика</span>
+          <h2>Коллекция в цифрах</h2>
+          <p>Посмотрите, сколько фильмов, актёров и связей хранится в каталоге.</p>
+        </a>
+        <a class="panel feature" th:href="@{/info}">
+          <span class="eyebrow">03 / О системе</span>
+          <h2>Познакомьтесь с каталогом</h2>
+          <p>Узнайте о возможностях системы и порядке работы с данными.</p>
+        </a>
+      </section>
+    </main>
+    <footer th:replace="~{fragments/footer :: footer}">
+    </footer>
+  </body>
+</html>

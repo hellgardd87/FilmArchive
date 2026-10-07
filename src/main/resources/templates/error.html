@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Ошибка'">
+  <head th:replace="~{fragments/header :: head(${pageTitle})}">
+  </head>
+  <body>
+    <header th:replace="~{fragments/header :: navigation}">
+    </header>
+    <main class="container">
+      <div th:replace="~{fragments/messages :: messages}">
+      </div>
+      <section class="panel error-panel">
+        <p class="eyebrow" th:text="${status ?: 'Ошибка'}">Ошибка</p>
+        <h1>Не удалось открыть страницу</h1>
+        <p th:text="${errorMessage ?: 'Запрос не удалось выполнить. Проверьте адрес или повторите попытку позже.'}">
+        </p>
+        <div class="actions">
+          <a class="button" th:href="@{/}">На главную</a>
+          <a class="button secondary" th:href="@{/edit}">К управлению</a>
+        </div>
+      </section>
+    </main>
+    <footer th:replace="~{fragments/footer :: footer}">
+    </footer>
+  </body>
+</html>

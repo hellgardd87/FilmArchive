@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Статистика'">
+  <head th:replace="~{fragments/header :: head(${pageTitle})}">
+  </head>
+  <body>
+    <header th:replace="~{fragments/header :: navigation}">
+    </header>
+    <main class="container">
+      <div th:replace="~{fragments/messages :: messages}">
+      </div>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">Коллекция в цифрах</p>
+          <h1>Статистика базы данных</h1>
+          <p class="muted">Актуальные показатели фильмов, справочников и актёрского состава.</p>
+        </div>
+        <a class="button secondary" th:href="@{/aggregate}">Обновить</a>
+      </div>
+      <section class="stats-grid">
+        <article class="stat">
+          <span>Фильмов</span>
+          <strong th:text="${stats.films}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Актёров</span>
+          <strong th:text="${stats.actors}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Жанров</span>
+          <strong th:text="${stats.genres}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Стран</span>
+          <strong th:text="${stats.countries}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Возрастных ограничений</span>
+          <strong th:text="${stats.ageLimits}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Вариантов качества</span>
+          <strong th:text="${stats.qualities}">0</strong>
+        </article>
+        <article class="stat">
+          <span>Связей фильм–актёр</span>
+          <strong th:text="${stats.links}">0</strong>
+        </article>
+      </section>
+      <section class="panel prose">
+        <h2>Как считаются связи</h2>
+        <p>Каждое участие актёра в фильме — одна связь. Если у фильма три актёра, он добавляет три связи к общему числу. Один актёр может участвовать в нескольких фильмах.</p>
+        <a th:href="@{/edit}">Перейти к управлению →</a>
+      </section>
+    </main>
+    <footer th:replace="~{fragments/footer :: footer}">
+    </footer>
+  </body>
+</html>

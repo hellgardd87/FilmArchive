@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="fields">
+      <ul class="validation-summary" th:if="${#fields.hasErrors('*')}" role="alert">
+        <li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+        </li>
+      </ul>
+      <div class="form-grid">
+        <label class="wide">Название <span class="required">*</span>
+          <input th:field="*{title}" required maxlength="200" placeholder="Например, Матрица">
+        </label>
+        <label class="wide">Описание<textarea th:field="*{description}" maxlength="5000" rows="3" placeholder="О чём этот фильм?">
+          </textarea>
+        </label>
+        <label>Длительность, мин <span class="required">*</span>
+          <input type="number" th:field="*{duration}" min="1" max="300" required>
+        </label>
+        <label>Дата выхода <span class="required">*</span>
+          <input type="date" th:field="*{releaseDate}" th:max="${today}" required>
+        </label>
+        <label>Бюджет, USD <span class="required">*</span>
+          <input type="number" th:field="*{budget}" min="0.01" max="599999999.99" step="0.01" required>
+        </label>
+        <label>Кассовые сборы, USD <span class="required">*</span>
+          <input type="number" th:field="*{totalBoxOffice}" min="0.01" max="2999999999.99" step="0.01" required>
+        </label>
+        <label>Жанр <span class="required">*</span>
+          <select th:field="*{genreId}" required>
+            <option value="">Выберите жанр</option>
+            <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.title}">
+            </option>
+          </select>
+        </label>
+        <label>Страна <span class="required">*</span>
+          <select th:field="*{countryId}" required>
+            <option value="">Выберите страну</option>
+            <option th:each="c : ${countries}" th:value="${c.id}" th:text="${c.title}">
+            </option>
+          </select>
+        </label>
+        <label>Возрастное ограничение <span class="required">*</span>
+          <select th:field="*{ageLimitId}" required>
+            <option value="">Выберите ограничение</option>
+            <option th:each="a : ${ageLimits}" th:value="${a.id}" th:text="${a.category}">
+            </option>
+          </select>
+        </label>
+        <label>Качество съёмки <span class="required">*</span>
+          <select th:field="*{shootingQualityId}" required>
+            <option value="">Выберите качество</option>
+            <option th:each="q : ${qualities}" th:value="${q.id}" th:text="${q.type}">
+            </option>
+          </select>
+        </label>
+        <fieldset class="wide actor-picker">
+          <legend>Актёры <span class="required">*</span>
+          </legend>
+          <p class="muted" th:if="${#lists.isEmpty(people)}">Сначала добавьте актёров в справочник ниже.</p>
+          <div class="checkbox-grid">
+            <label th:each="p : ${people}">
+              <input type="checkbox" th:field="*{actorIds}" th:value="${p.id}">
+              <span th:text="${p.fullName}">
+              </span>
+            </label>
+          </div>
+          <small class="muted">Выберите одного или нескольких актёров.</small>
+        </fieldset>
+      </div>
+    </div>
+  </body>
+</html>
