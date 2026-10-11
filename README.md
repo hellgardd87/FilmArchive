@@ -4,8 +4,7 @@ FilmArchive — учебный информационный портал о ки
 
 ## Стек
 
-Java 21, Spring Boot **3.5.13** (версия из pom.xml), Spring MVC, Spring Data JPA / Hibernate, Thymeleaf, PostgreSQL, Maven, HTML5, CSS3, JavaScript. Второй проект и другая СУБД не используются.
-
+Java 21, Spring Boot **3.5.13**, Spring MVC, Spring Data JPA / Hibernate, Thymeleaf, PostgreSQL, Maven, HTML5, CSS3, JavaScript. 
 ## Структура
 
 ```text
