@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-  <body>
-    <footer th:fragment="footer" class="site-footer">
-      <div class="container">
-        <span>Каталог фильмов</span>
-        <span>Ваша коллекция. Все истории в одном месте.</span>
-      </div>
-    </footer>
-  </body>
+<body>
+<footer th:fragment="footer" class="site-footer">
+ <div class="container footer-grid">
+  <div><strong>FilmArchive — информационный портал о кино.</strong>
+   <p>Сайт предназначен для пользователей, интересующихся кино, фильмами, актёрами и кинематографом.</p>
+   <p>© 2026 FilmArchive</p>
+  </div>
+  <div><p>Разработчик: Даниил Сабадыш</p>
+   <p>Email: <a th:href="${'mailto:' + contactEmail}" th:text="${contactEmail}">sabadyshdv23@oiate.ru</a></p>
+   <p>Telegram: <a th:href="${'https://t.me/' + contactTelegram}" th:text="${'@' + contactTelegram}" target="_blank" rel="noopener noreferrer">@Hellgard</a></p>
+   <a th:href="@{/contacts}">Контактная информация</a>
+  </div>
+ </div>
+</footer>
+</body>
 </html>

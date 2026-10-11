@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Калькулятор окупаемости фильма'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Калькулятор окупаемости фильма</h1></div>
+<section class="panel prose"><h2>Бюджет и кассовые сборы</h2><form method="get" th:action="@{/services/profitability}" class="tool-form" data-calculator="profitability">
+<label for="film-budget">Бюджет</label><input id="film-budget" name="budget" type="number" min="0.01" max="1000000000000" step="0.01" required th:value="${budget}">
+<label for="film-box-office">Кассовые сборы</label><input id="film-box-office" name="boxOffice" type="number" min="0" max="1000000000000" step="0.01" required th:value="${boxOffice}">
+<button type="submit">Рассчитать</button><output class="live-preview" aria-live="polite"></output></form>
+<div class="result-box" th:if="${result != null}" role="status"><p>Коэффициент сборы / бюджет: <strong th:text="${result.ratio}"></strong></p><p>Прибыль по формуле сборы − бюджет: <strong th:text="${result.profit}"></strong></p></div>
+<p class="muted">Укажите суммы в одной валюте. Учебная формула не учитывает долю кинотеатров, маркетинг, налоги и другие расходы.</p></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

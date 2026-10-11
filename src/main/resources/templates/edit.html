@@ -113,9 +113,9 @@
               </li>
             </ul>
             <div class="compact-form">
-              <label>Название<input th:field="*{title}" maxlength="120" required>
+              <label>Название<input id="genre-title" th:field="*{title}" maxlength="120" required>
               </label>
-              <label>Код<input th:field="*{code}" maxlength="120" required>
+              <label>Код<input id="genre-code" th:field="*{code}" maxlength="120" required>
               </label>
               <button type="submit">Добавить</button>
             </div>
@@ -140,9 +140,9 @@
               </li>
             </ul>
             <div class="compact-form">
-              <label>Название<input th:field="*{title}" maxlength="120" required>
+              <label>Название<input id="country-title" th:field="*{title}" maxlength="120" required>
               </label>
-              <label>Код<input th:field="*{code}" maxlength="120" required>
+              <label>Код<input id="country-code" th:field="*{code}" maxlength="120" required>
               </label>
               <button type="submit">Добавить</button>
             </div>
@@ -167,9 +167,9 @@
               </li>
             </ul>
             <div class="compact-form">
-              <label>Категория<input th:field="*{category}" maxlength="120" required>
+              <label>Категория<input id="age-category" th:field="*{category}" maxlength="120" required>
               </label>
-              <label>Код<input th:field="*{code}" maxlength="120" required>
+              <label>Код<input id="age-code" th:field="*{code}" maxlength="120" required>
               </label>
               <button type="submit">Добавить</button>
             </div>
@@ -194,7 +194,7 @@
               </li>
             </ul>
             <div class="compact-form">
-              <label>Название<input th:field="*{type}" maxlength="120" required>
+              <label>Название<input id="quality-type" th:field="*{type}" maxlength="120" required>
               </label>
               <button type="submit">Добавить</button>
             </div>
@@ -217,7 +217,7 @@
               </li>
             </ul>
             <div class="compact-form">
-              <label>ФИО<input th:field="*{fullName}" maxlength="120" required>
+              <label>ФИО<input id="person-fullName" th:field="*{fullName}" maxlength="120" required>
               </label>
               <button type="submit">Добавить</button>
             </div>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Проверка возрастного рейтинга'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Проверка возрастного рейтинга</h1></div>
+<section class="panel prose"><h2>Возраст зрителя и отметка фильма</h2><form method="get" th:action="@{/services/age-check}" class="tool-form">
+<label for="viewer-age">Возраст зрителя</label><input id="viewer-age" name="age" type="number" min="0" max="120" step="1" required th:value="${age}">
+<label for="film-rating">Возрастной рейтинг</label><select id="film-rating" name="rating" required><option value="">Выберите рейтинг</option><option th:each="r : ${ratings}" th:value="${r}" th:text="${r} + '+'" th:selected="${r == rating}"></option></select>
+<button type="submit">Проверить</button></form>
+<div class="result-box" th:if="${allowed != null}" role="status"><p th:text="${allowed} ? 'Возраст соответствует выбранному рейтингу.' : 'Возраст не соответствует выбранному рейтингу.'"></p></div>
+<p>Сервис сравнивает числа. Подробнее: <a th:href="@{/ratings-info}">возрастные рейтинги</a>.</p></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

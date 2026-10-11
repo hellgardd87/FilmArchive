@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<article th:fragment="card(f)" class="panel film-detail">
+ <h2 th:text="${f.title}">Название фильма</h2>
+ <p th:text="${f.description}">Описание</p>
+ <dl class="film-data">
+  <div><dt>Жанр</dt><dd th:text="${f.genre.title}"></dd></div>
+  <div><dt>Страна</dt><dd th:text="${f.country.title}"></dd></div>
+  <div><dt>Длительность</dt><dd th:text="${f.duration} + ' мин'"></dd></div>
+  <div><dt>Дата выхода</dt><dd th:text="${#temporals.format(f.releaseDate, 'dd.MM.yyyy')}"></dd></div>
+  <div><dt>Возрастное ограничение</dt><dd th:text="${f.ageLimit.category}"></dd></div>
+  <div><dt>Качество</dt><dd th:text="${f.shootingQuality.type}"></dd></div>
+  <div><dt>Бюджет</dt><dd th:text="${#numbers.formatDecimal(f.budget, 1, 'WHITESPACE', 2, 'COMMA')}"></dd></div>
+  <div><dt>Кассовые сборы</dt><dd th:text="${#numbers.formatDecimal(f.totalBoxOffice, 1, 'WHITESPACE', 2, 'COMMA')}"></dd></div>
+  <div class="full-width"><dt>Актёры</dt><dd>
+   <span th:if="${#sets.isEmpty(f.actors)}">Актёры пока не указаны</span>
+   <ul th:unless="${#sets.isEmpty(f.actors)}"><li th:each="actor : ${f.actors}" th:text="${actor.fullName}"></li></ul>
+  </dd></div>
+ </dl>
+</article>
+</body>
+</html>

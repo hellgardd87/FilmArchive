@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Полезные ресурсы о кино'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Полезные ресурсы о кино</h1></div>
+<section class="panel prose"><p>Знакомьтесь с фильмами, читайте рецензии и изучайте архивные материалы на тематических сайтах.</p><div class="resource-grid"><article><h2><a href="https://www.imdb.com/" target="_blank" rel="noopener noreferrer">IMDb</a></h2><p>База фильмов, актёров и участников съёмочных групп.</p></article>
+<article><h2><a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">The Movie Database</a></h2><p>Сообщество и база сведений о фильмах и сериалах.</p></article>
+<article><h2><a href="https://www.rottentomatoes.com/" target="_blank" rel="noopener noreferrer">Rotten Tomatoes</a></h2><p>Обзоры и агрегированные оценки критиков и зрителей.</p></article>
+<article><h2><a href="https://www.metacritic.com/movie/" target="_blank" rel="noopener noreferrer">Metacritic</a></h2><p>Сводные оценки и ссылки на рецензии.</p></article>
+<article><h2><a href="https://www.bfi.org.uk/" target="_blank" rel="noopener noreferrer">British Film Institute</a></h2><p>Материалы о кинематографе, культурном наследии и кинообразовании.</p></article>
+<article><h2><a href="https://archive.org/details/movies" target="_blank" rel="noopener noreferrer">Internet Archive</a></h2><p>Архив видеоматериалов и исторических коллекций.</p></article>
+<article><h2><a href="https://www.kinopoisk.ru/" target="_blank" rel="noopener noreferrer">Кинопоиск</a></h2><p>Русскоязычная база фильмов, актёров, рецензий и подборок.</p></article>
+<article><h2><a href="https://www.pixar.com/" target="_blank" rel="noopener noreferrer">Pixar</a></h2><p>Официальный сайт анимационной студии и её фильмов.</p></article></div></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

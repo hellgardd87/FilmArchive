@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Поиск по сайту'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Поиск по сайту</h1></div>
+<section class="panel prose"><h2>Информационные страницы и сервисы</h2>
+<p>Начните вводить запрос в поле поиска в верхнем меню и выберите подходящую подсказку. Чтобы увидеть все результаты, нажмите Enter без выбора подсказки. Для поиска фильмов по жанру и стране используйте <a th:href="@{/search}">поиск фильмов</a>.</p>
+<p th:if="${#strings.isEmpty(query)}">Например: история, жанры, погода.</p>
+<div th:unless="${#strings.isEmpty(query)}"><p>Запрос: <strong th:text="${query}"></strong></p>
+<p th:if="${#lists.isEmpty(results)}">По вашему запросу ничего не найдено.</p>
+<article class="search-result" th:each="page : ${results}"><h3><a th:href="@{${page.url}}" th:text="${page.title}"></a></h3><p th:text="${page.description}"></p><p class="muted" th:text="${page.url}"></p></article></div></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Каталог фильмов'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><div><h1>Каталог фильмов</h1><p>Фильмы и актёры из коллекции FilmArchive.</p></div><a class="button secondary" th:href="@{/search}">Поиск по жанру и стране</a></div>
+<p class="muted">Бюджеты и сборы показаны в денежных единицах, использованных при заполнении каталога; валюта в текущей модели данных отдельно не хранится.</p>
+<p class="empty-state" th:if="${#lists.isEmpty(films)}">Каталог пока пуст.</p>
+<section class="catalog-grid" aria-label="Фильмы"><div th:each="f : ${films}"><article th:replace="~{fragments/film-card :: card(${f})}"></article></div></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

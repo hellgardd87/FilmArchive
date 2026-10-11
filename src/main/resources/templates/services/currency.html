@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Конвертер валют'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Конвертер валют</h1></div>
+<section class="panel prose"><h2>Пересчёт суммы по справочному курсу</h2><form method="get" th:action="@{/services/currency}" class="tool-form">
+<label for="currency-amount">Сумма</label><input id="currency-amount" name="amount" type="number" min="0" max="1000000000000" step="0.01" required th:value="${amount}">
+<label for="currency-from">Из валюты</label><select id="currency-from" name="from" required><option th:each="c : ${currencies}" th:value="${c}" th:text="${c}" th:selected="${c == from}"></option></select>
+<label for="currency-to">В валюту</label><select id="currency-to" name="to" required><option th:each="c : ${currencies}" th:value="${c}" th:text="${c}" th:selected="${c == to}"></option></select>
+<button type="submit">Конвертировать</button></form>
+<div class="result-box" th:if="${result != null}" role="status"><p><strong th:text="${result.amount} + ' ' + ${result.from} + ' = ' + ${result.converted} + ' ' + ${result.to}"></strong></p><p>Курс: <span th:text="${result.rate}"></span></p><p th:if="${result.from != result.to}">Дата курса: <span th:text="${result.date}"></span></p><p th:if="${result.from == result.to}">При совпадении валют сумма не меняется.</p></div>
+<p class="muted">Справочные данные: <a href="https://frankfurter.dev/" target="_blank" rel="noopener noreferrer">Frankfurter</a>. Курс не включает комиссии обмена.</p></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

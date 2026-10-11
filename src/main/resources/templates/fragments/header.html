@@ -1,26 +1,71 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-  <head th:fragment="head(title)">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${title} + ' · Каталог фильмов'">Каталог фильмов</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script defer th:src="@{/js/main.js}">
-    </script>
-  </head>
-  <body>
-    <header th:fragment="navigation" class="site-header">
-      <div class="container nav-wrap">
-        <a class="brand" th:href="@{/}">
-          <span class="brand-mark" aria-hidden="true">▶</span> Каталог фильмов</a>
-        <nav aria-label="Основная навигация">
-          <a th:href="@{/}">Главная</a>
-          <a th:href="@{/edit}">Управление</a>
-          <a th:href="@{/search}">Поиск</a>
-          <a th:href="@{/aggregate}">Статистика</a>
-          <a th:href="@{/info}">О системе</a>
-        </nav>
-      </div>
-    </header>
-  </body>
+<head th:fragment="head(title)">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title th:text="${title} + ' · FilmArchive'">FilmArchive</title>
+ <meta name="description" th:content="${pageDescription ?: 'FilmArchive — информационный портал о кино, фильмах и актёрах.'}" content="FilmArchive — информационный портал о кино.">
+ <meta name="robots" th:if="${noIndex}" content="noindex, follow">
+ <link rel="canonical" th:if="${canonicalUrl != null and !noIndex}" th:href="${canonicalUrl}">
+ <link rel="stylesheet" th:href="@{/css/style.css}">
+ <script defer th:src="@{/js/main.js}"></script>
+</head>
+<body>
+<header th:fragment="navigation" class="site-header">
+ <div class="container nav-wrap">
+  <a class="brand" th:href="@{/}"><span class="brand-mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M7 3.5v17l15-8.5z"></path></svg></span> FilmArchive</a>
+  <button class="menu-toggle" type="button" aria-controls="header-panel" aria-expanded="false" aria-label="Открыть меню" hidden>
+   <span class="menu-toggle-icon" aria-hidden="true"></span>
+  </button>
+  <div class="header-panel" id="header-panel">
+  <nav aria-label="Основная навигация">
+   <a th:href="@{/}">Главная</a>
+   <a th:href="@{/catalog}">Каталог</a>
+   <details class="nav-dropdown">
+    <summary>Сервисы</summary>
+    <div class="dropdown-items">
+     <a th:href="@{/services}">Все сервисы</a>
+     <a th:href="@{/catalog}">Каталог фильмов</a>
+     <a th:href="@{/search}">Поиск фильмов</a>
+     <a th:href="@{/site-search}">Поиск по сайту</a>
+     <a th:href="@{/services/random-film}">Случайный фильм</a>
+     <a th:href="@{/services/watch-time}">Калькулятор времени просмотра</a>
+     <a th:href="@{/services/profitability}">Калькулятор окупаемости фильма</a>
+     <a th:href="@{/services/age-check}">Проверка возрастного рейтинга</a>
+     <a th:href="@{/services/currency}">Конвертер валют</a>
+     <a th:href="@{/services/weather}">Погода</a>
+    </div>
+   </details>
+   <details class="nav-dropdown">
+    <summary>Информационные страницы</summary>
+    <div class="dropdown-items">
+     <a th:href="@{/history}">История кинематографа</a>
+     <a th:href="@{/genres-info}">Основные жанры кино</a>
+     <a th:href="@{/cinema-technologies}">Технологии в кинематографе</a>
+     <a th:href="@{/ratings-info}">Возрастные рейтинги</a>
+     <a th:href="@{/formats}">Форматы и качество видео</a>
+     <a th:href="@{/recommendations}">Как выбрать фильм</a>
+     <a th:href="@{/aggregate}">Статистика</a>
+     <a th:href="@{/links}">Полезные ссылки</a>
+     <a th:href="@{/about}">О проекте</a>
+     <a th:href="@{/contacts}">Контакты</a>
+    </div>
+   </details>
+  </nav>
+  <form class="site-search-form" method="get" th:action="@{/site-search}" role="search">
+   <label class="visually-hidden" for="global-query">Поиск по сайту</label>
+   <div class="search-row">
+    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg>
+    <input id="global-query" name="query" type="search" placeholder="Поиск по сайту..." maxlength="200" required th:value="${query}">
+   </div>
+   <div class="search-suggestions" hidden>
+    <div id="global-suggestions" role="listbox" aria-label="Совпадения по сайту"></div>
+    <p class="search-suggestions-message"></p>
+   </div>
+   <span class="visually-hidden search-suggestions-status" role="status" aria-live="polite"></span>
+  </form>
+  </div>
+ </div>
+</header>
+</body>
 </html>

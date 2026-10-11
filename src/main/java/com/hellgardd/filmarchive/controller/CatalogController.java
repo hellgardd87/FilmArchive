@@ -49,7 +49,6 @@ public class CatalogController {
 
  @GetMapping("/")
  public String index(Model model) {
-  model.addAttribute("stats", statistics.get());
   return "index";
  }
 
@@ -92,6 +91,12 @@ public class CatalogController {
   }
 
   return "edit";
+ }
+
+ @GetMapping("/catalog")
+ public String catalog(Model model) {
+  model.addAttribute("films", films.all());
+  return "catalog";
  }
 
  @GetMapping("/edit")

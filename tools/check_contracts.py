@@ -50,14 +50,15 @@ film_source = (JAVA / "entity/Film.java").read_text(encoding="utf-8")
 film_properties = properties("Film", "entity")
 for name in ("title", "description", "duration", "budget", "totalBoxOffice", "releaseDate", "genre", "country", "ageLimit", "shootingQuality", "actors"):
     check(name in film_properties, f"Missing Film property: {name}")
-check('name="film_people"' in film_source, "Join table must be film_people")
+check(re.search(r'name\s*=\s*"film_people"', film_source), "Join table must be film_people")
 check("CascadeType.REMOVE" not in film_source and "CascadeType.ALL" not in film_source, "Unsafe cascading removal")
 
 form_types = {"filmForm": "FilmForm", "genreForm": "ReferenceForm", "countryForm": "ReferenceForm", "ageForm": "AgeLimitForm", "qualityForm": "QualityForm", "personForm": "PersonForm"}
-controller = (JAVA / "controller/CatalogController.java").read_text(encoding="utf-8")
+controller = "\n".join(path.read_text(encoding="utf-8") for path in (JAVA / "controller").glob("*.java"))
 routes = set(re.findall(r'@(Get|Post)Mapping\("([^"]+)"\)', controller))
 required = {"Get": ["/", "/edit", "/edit_film/{id}", "/search", "/get_countries", "/aggregate", "/info"],
             "Post": ["/add_genre", "/add_country", "/add_quality", "/add_age_limit", "/add_person", "/delete_person/{id}", "/add_film", "/update_film/{id}", "/delete_film/{id}"]}
+required["Get"] += ["/catalog", "/site-search", "/services", "/about", "/history", "/genres-info", "/cinema-technologies", "/ratings-info", "/formats", "/recommendations", "/links", "/contacts", "/services/random-film", "/services/watch-time", "/services/profitability", "/services/age-check", "/services/currency", "/services/weather"]
 for method, paths in required.items():
     for path in paths:
         check((method, path) in routes, f"Missing {method} route {path}")
@@ -92,7 +93,7 @@ check(pom.findtext(".//m:java.version", namespaces=ns) == "21", "Java version mu
 check(not any("mysql" in a.lower() or "ucanaccess" in a.lower() for a in artifacts), "Forbidden database dependency")
 for name in ("Film", "Genre", "Country", "AgeLimit", "ShootingQuality", "Person"):
     repository = (JAVA / "repository" / (name + "Repository.java")).read_text(encoding="utf-8")
-    check(f"JpaRepository<{name},Long>" in repository, f"{name}Repository must extend JpaRepository")
+    check(re.search(rf"JpaRepository\s*<\s*{name}\s*,\s*Long\s*>", repository), f"{name}Repository must extend JpaRepository")
 
 if errors:
     raise SystemExit("\n".join(errors))

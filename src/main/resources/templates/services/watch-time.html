@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Калькулятор времени просмотра'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Калькулятор времени просмотра</h1></div>
+<section class="panel prose"><h2>Сколько займёт киномарафон</h2><form method="get" th:action="@{/services/watch-time}" class="tool-form" data-calculator="watch-time">
+<label for="film-count">Количество фильмов</label><input id="film-count" name="count" type="number" min="1" max="10000" step="1" required th:value="${count}">
+<label for="average-duration">Средняя длительность, минут</label><input id="average-duration" name="duration" type="number" min="1" max="1440" step="1" required th:value="${duration}">
+<button type="submit">Рассчитать</button><output class="live-preview" aria-live="polite"></output></form>
+<div class="result-box" th:if="${result != null}" role="status"><p>Общее время: <strong th:text="${result.minutes} + ' мин'"></strong></p><p th:text="${result.hours} + ' ч ' + ${result.remainingMinutes} + ' мин'"></p></div>
+<p class="muted">Расчёт не включает перерывы. Форма работает и при отключённом JavaScript.</p></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

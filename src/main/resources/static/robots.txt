@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /edit
+Disallow: /site-search
+Disallow: /get_countries
+Disallow: /add_
+Disallow: /update_
+Disallow: /delete_

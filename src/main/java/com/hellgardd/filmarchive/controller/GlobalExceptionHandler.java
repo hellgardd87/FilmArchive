@@ -47,6 +47,7 @@ public class GlobalExceptionHandler {
            .body(Map.of("message", message));
   }
 
+  model.addAttribute("noIndex", true);
   model.addAttribute("status", status.value());
   model.addAttribute("errorMessage", message);
 
@@ -130,6 +131,19 @@ public class GlobalExceptionHandler {
           "PostgreSQL временно недоступен. " +
                   "Проверьте подключение к базе данных."
   );
+ }
+
+ @ExceptionHandler(IllegalArgumentException.class)
+ @ResponseStatus(HttpStatus.BAD_REQUEST)
+ public Object input(IllegalArgumentException ex, HttpServletRequest request, Model model) {
+  return error(request, model, HttpStatus.BAD_REQUEST, "Некорректные данные. Проверьте поля формы и повторите запрос.");
+ }
+
+ @ExceptionHandler(ExternalServiceException.class)
+ @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+ public Object external(ExternalServiceException ex, HttpServletRequest request, Model model) {
+  log.warn("External service failed", ex);
+  return error(request, model, HttpStatus.SERVICE_UNAVAILABLE, "Сервис временно недоступен");
  }
 
  @ExceptionHandler(Exception.class)

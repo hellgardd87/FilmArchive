@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Погода'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Погода перед походом в кино</h1></div>
+<section class="panel prose"><h2>Текущие условия в городе</h2><form method="get" th:action="@{/services/weather}" class="tool-form">
+<label for="weather-city">Город</label><input id="weather-city" name="city" type="text" minlength="2" maxlength="100" placeholder="Москва" required th:value="${city}">
+<button type="submit">Показать погоду</button></form>
+<div class="result-box" th:if="${result != null}" role="status"><h3 th:text="${result.city} + ', ' + ${result.country}"></h3><p>Температура: <strong th:text="${result.temperature} + ' °C'"></strong></p><p>Ощущается как: <span th:text="${result.feelsLike} + ' °C'"></span></p><p th:text="${result.description}"></p><p>Время данных в городе: <span th:text="${result.observedAt}"></span></p></div>
+<p class="muted">При совпадении названий выбирается первый результат поиска. Данные: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>, поиск города — <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer">GeoNames</a>.</p></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

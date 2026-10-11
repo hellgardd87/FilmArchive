@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Сервисы'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><div><h1>Сервисы FilmArchive</h1><p>Десять инструментов для работы с каталогом и планирования просмотра.</p></div></div>
+<section class="feature-grid" aria-label="Сервисы"><article class="panel" th:each="service : ${services}"><h2 th:text="${service.title}"></h2><p th:text="${service.description}"></p><a class="button secondary" th:href="@{${service.url}}">Открыть</a></article></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Возрастные рейтинги'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Возрастные рейтинги</h1></div>
+<section class="panel prose"><h2>Что означает отметка возраста</h2><p>Возрастная маркировка помогает учитывать содержание фильма при выборе просмотра. В каталоге FilmArchive используются обозначения 0+, 6+, 12+, 16+ и 18+.</p><ul><li>0+ — категория без возрастного ограничения в используемом справочнике.</li><li>6+ — возрастной порог 6 лет.</li><li>12+ — возрастной порог 12 лет.</li><li>16+ — возрастной порог 16 лет.</li><li>18+ — возрастной порог 18 лет.</li></ul><h2>Как работает проверка на сайте</h2><p>Учебный сервис сравнивает введённый возраст с числом в обозначении. Он не анализирует содержание фильма. Перед просмотром изучите описание и официальную маркировку конкретного издания.</p><p><a th:href="@{/services/age-check}">Проверить возраст и рейтинг</a></p></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

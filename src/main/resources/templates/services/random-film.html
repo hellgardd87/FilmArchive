@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Случайный фильм'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Случайный фильм</h1><a class="button" th:href="@{/services/random-film}">Выбрать ещё раз</a></div>
+<section th:if="${film != null}" aria-label="Выбранный фильм"><article th:replace="~{fragments/film-card :: card(${film})}"></article></section>
+<p class="empty-state" th:if="${film == null}">В каталоге пока нет фильмов. Добавьте записи на странице управления.</p>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

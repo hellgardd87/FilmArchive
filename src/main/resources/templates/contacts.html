@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:with="pageTitle='Контактная информация'">
+<head th:replace="~{fragments/header :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/header :: navigation}"></header>
+<main class="container" id="main-content">
+<div class="page-heading"><h1>Контактная информация</h1></div>
+<section class="panel prose"><h2>Разработчик</h2><p>Даниил Сабадыш — разработчик учебного проекта FilmArchive.</p><h2>Обратная связь</h2><p>Email: <a th:href="${'mailto:' + contactEmail}" th:text="${contactEmail}">sabadyshdv23@oiate.ru</a></p><p>Telegram: <a th:href="${'https://t.me/' + contactTelegram}" th:text="${'@' + contactTelegram}" target="_blank" rel="noopener noreferrer">@Hellgard</a></p><p>По этим контактам можно сообщить об ошибке, предложить улучшение сайта или задать вопрос о проекте.</p><h2>О сайте</h2><p>FilmArchive — информационный портал для пользователей, интересующихся фильмами, актёрами, жанрами, историей кино и кинематографом.</p></section>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
